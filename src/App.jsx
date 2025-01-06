@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+// import reactLogo from "./assets/react.svg";
+// import viteLogo from "/vite.svg";
+import "./App.css";
+import DocumentManager from "./components/DocumentManager";
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [applications, setApplications] = useState([]);
+	const [currentAppIndex, setCurrentAppIndex] = useState(0);
+	const [currentDocIndex, setCurrentDocIndex] = useState(0);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	// Add a new application to the list of applications
+	const addApplication = (name) => {
+		setApplications([
+			...applications,
+			{
+				name,
+				documents: [], // documents array is empty initially
+			},
+		]);
+	};
+
+	// Add a new document to the list of documents in the current application
+	const addDocument = (name) => {
+		const newApps = [...applications];
+		newApps[currentAppIndex].documents.push({
+			name,
+			file: null, // file is null until a file is uploaded
+		});
+		setApplications(newApps);
+	};
+
+	// Remove the application at the specified index from the list of applications
+	// and update the current application index and document index accordingly
+	const removeApplication = (appIndex) => {
+		const newApps = applications.filter((_, index) => index !== appIndex);
+		setApplications(newApps);
+		setCurrentAppIndex(Math.min(currentAppIndex, newApps.length - 1));
+		setCurrentDocIndex(0); // reset document index to 0
+	};
+
+	// Remove the document at the specified index in the current application
+	// and update the current document index accordingly
+	const removeDocument = (appIndex, docIndex) => {
+		const newApps = [...applications];
+		newApps[appIndex].documents = newApps[appIndex].documents.filter(
+			(_, index) => index !== docIndex
+		);
+		setApplications(newApps);
+		setCurrentDocIndex(
+			Math.min(currentDocIndex, newApps[appIndex].documents.length - 1)
+		); // update document index to be the minimum of the current index and the length of the documents array - 1
+	};
+
+	return <div className="min-h-screen bg-gray-50"></div>;
 }
 
-export default App
+export default App;
