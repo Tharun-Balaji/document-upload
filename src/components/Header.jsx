@@ -35,7 +35,7 @@ function Header({
 					</h1>
 					{/* This span displays the number of applications that have been added. */}
 					{applications.length > 0 && (
-						<span className="text-sm text-gray-500">
+						<span className="text-sm hidden md:inline text-gray-500">
 							{applications.length} application
 							{applications.length !== 1 ? "s" : ""}
 						</span>
