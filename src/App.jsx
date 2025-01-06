@@ -3,7 +3,7 @@ import { useState } from "react";
 // import viteLogo from "/vite.svg";
 import "./App.css";
 import DocumentManager from "./components/DocumentManager";
-import { Modal } from "./components";
+import { Header, Modal } from "./components";
 
 function App() {
 	// applications: an array of objects, each representing an application
@@ -25,6 +25,10 @@ function App() {
 	// isDocModalOpen: a boolean indicating whether the document modal is open
 	// initialized to false, which means the modal is closed by default
 	const [isDocModalOpen, setIsDocModalOpen] = useState(false);
+
+	// isSidePanelOpen: a boolean indicating whether the side panel is open
+	// initialized to true, which means the side panel is open by default
+	const [isSidePanelOpen, setIsSidePanelOpen] = useState(true);
 
 	// Add a new application to the list of applications
 	const addApplication = (name) => {
@@ -84,7 +88,19 @@ function App() {
 				onSubmit={addDocument}
 				title="Add New Document"
 			/>
+			<div className="h-screen flex flex-col">
+				{/* Header */}
+				<Header
+					isSidePanelOpen={isSidePanelOpen}
+					setIsSidePanelOpen={setIsSidePanelOpen}
+					isAppModalOpen={isAppModalOpen}
+					setIsAppModalOpen={setIsAppModalOpen}
+					applications={applications}
+				/>
+			</div>
 		</div>
+
+		// <DocumentManager />
 	);
 }
 
