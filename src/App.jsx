@@ -3,11 +3,28 @@ import { useState } from "react";
 // import viteLogo from "/vite.svg";
 import "./App.css";
 import DocumentManager from "./components/DocumentManager";
+import { Modal } from "./components";
 
 function App() {
+	// applications: an array of objects, each representing an application
+	// the state is initialized as an empty array
 	const [applications, setApplications] = useState([]);
+
+	// currentAppIndex: the index of the currently selected application
+	// initialized to 0, which means the first application is selected by default
 	const [currentAppIndex, setCurrentAppIndex] = useState(0);
+
+	// currentDocIndex: the index of the currently selected document
+	// initialized to 0, which means the first document is selected by default
 	const [currentDocIndex, setCurrentDocIndex] = useState(0);
+
+	// isAppModalOpen: a boolean indicating whether the application modal is open
+	// initialized to false, which means the modal is closed by default
+	const [isAppModalOpen, setIsAppModalOpen] = useState(false);
+
+	// isDocModalOpen: a boolean indicating whether the document modal is open
+	// initialized to false, which means the modal is closed by default
+	const [isDocModalOpen, setIsDocModalOpen] = useState(false);
 
 	// Add a new application to the list of applications
 	const addApplication = (name) => {
@@ -52,7 +69,23 @@ function App() {
 		); // update document index to be the minimum of the current index and the length of the documents array - 1
 	};
 
-	return <div className="min-h-screen bg-gray-50"></div>;
+	return (
+		<div className="min-h-screen bg-gray-50">
+			{/* Modals for adding applications and documents */}
+			<Modal
+				isOpen={isAppModalOpen}
+				onClose={() => setIsAppModalOpen(false)}
+				onSubmit={addApplication}
+				title="Add New Application"
+			/>
+			<Modal
+				isOpen={isDocModalOpen}
+				onClose={() => setIsDocModalOpen(false)}
+				onSubmit={addDocument}
+				title="Add New Document"
+			/>
+		</div>
+	);
 }
 
 export default App;
