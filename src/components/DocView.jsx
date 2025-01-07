@@ -35,6 +35,7 @@ function DocView({
 					{/* Document name and delete button */}
 					<div className="flex justify-between items-center mb-6">
 						<h3 className="text-lg font-medium">
+							{applications[currentAppIndex].name}-
 							{currentDoc.name}
 						</h3>
 						<button

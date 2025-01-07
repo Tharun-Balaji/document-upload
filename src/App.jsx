@@ -47,6 +47,8 @@ function App() {
 				documents: [], // documents array is empty initially
 			},
 		]);
+		// make the new application the current application
+		setCurrentAppIndex(applications.length);
 	};
 
 	// Add a new document to the list of documents in the current application

@@ -30,7 +30,7 @@ This repository contains a React application for managing nested documents withi
 
 ## Demo
 
-Live Demo: [Nested Document Management App](https://regal-choux-898f2e.netlify.app/)
+Live Demo: [Nested Document Management App](https://iridescent-custard-5d0314.netlify.app/)
 
 ## Folder Structure
 
