@@ -7,6 +7,7 @@ import {
 	EmptyApplicationState,
 	Header,
 	Modal,
+	SidePanel,
 	TabNavigation,
 } from "./components";
 
@@ -78,6 +79,10 @@ function App() {
 		); // update document index to be the minimum of the current index and the length of the documents array - 1
 	};
 
+	// Get the current application and document based on the current indices
+	const currentDoc =
+		applications[currentAppIndex]?.documents[currentDocIndex];
+
 	return (
 		<div className="min-h-screen bg-gray-50">
 			{/* Modals for adding applications and documents */}
@@ -108,13 +113,27 @@ function App() {
 						setIsAppModalOpen={setIsAppModalOpen}
 					/>
 				) : (
-					<TabNavigation
-						applications={applications}
-						setCurrentAppIndex={setCurrentAppIndex}
-						setCurrentDocIndex={setCurrentDocIndex}
-						currentAppIndex={currentAppIndex}
-						removeApplication={removeApplication}
-					/>
+					<>
+						<TabNavigation
+							applications={applications}
+							setCurrentAppIndex={setCurrentAppIndex}
+							setCurrentDocIndex={setCurrentDocIndex}
+							currentAppIndex={currentAppIndex}
+							removeApplication={removeApplication}
+						/>
+						{/* Content Area with Side Panel */}
+						<SidePanel
+							isSidePanelOpen={isSidePanelOpen}
+							setIsSidePanelOpen={setIsSidePanelOpen}
+							isDocModalOpen={isDocModalOpen}
+							setIsDocModalOpen={setIsDocModalOpen}
+							applications={applications}
+							currentAppIndex={currentAppIndex}
+							setCurrentAppIndex={setCurrentAppIndex}
+							currentDocIndex={currentDocIndex}
+							setCurrentDocIndex={setCurrentDocIndex}
+						/>
+					</>
 				)}
 			</div>
 		</div>
