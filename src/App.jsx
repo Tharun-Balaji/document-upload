@@ -6,6 +6,7 @@ import DocumentManager from "./components/DocumentManager";
 import {
 	DocView,
 	EmptyApplicationState,
+	FooterNavigation,
 	Header,
 	Modal,
 	SidePanel,
@@ -110,6 +111,39 @@ function App() {
 		setApplications(newApps);
 	};
 
+	/**
+	 * Navigate through the documents in the current application and
+	 * the applications themselves in the list of applications.
+	 * @param {string} direction - The direction of navigation, either "next" or "prev"
+	 */
+	const navigate = (direction) => {
+		if (direction === "next") {
+			// Move to the next document in the current application
+			// If at the end of the documents in the current application, move to the next application
+			const currentApp = applications[currentAppIndex];
+			if (
+				currentApp &&
+				currentDocIndex < currentApp.documents.length - 1
+			) {
+				setCurrentDocIndex(currentDocIndex + 1);
+			} else if (currentAppIndex < applications.length - 1) {
+				setCurrentAppIndex(currentAppIndex + 1);
+				setCurrentDocIndex(0); // reset document index to 0
+			}
+		} else {
+			// Move to the previous document in the current application
+			// If at the beginning of the documents in the current application, move to the previous application
+			if (currentDocIndex > 0) {
+				setCurrentDocIndex(currentDocIndex - 1);
+			} else if (currentAppIndex > 0) {
+				setCurrentAppIndex(currentAppIndex - 1);
+				setCurrentDocIndex(
+					applications[currentAppIndex - 1].documents.length - 1
+				); // move to the last document in the previous application
+			}
+		}
+	};
+
 	// Get the current application and document based on the current indices
 	const currentDoc =
 		applications[currentAppIndex]?.documents[currentDocIndex];
@@ -175,6 +209,13 @@ function App() {
 								applications={applications}
 							/>
 						</div>
+						{/* Footer Navigation */}
+						<FooterNavigation
+							applications={applications}
+							currentAppIndex={currentAppIndex}
+							currentDocIndex={currentDocIndex}
+							navigate={navigate}
+						/>
 					</>
 				)}
 			</div>
