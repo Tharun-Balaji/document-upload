@@ -4,6 +4,7 @@ import { useState } from "react";
 import "./App.css";
 import DocumentManager from "./components/DocumentManager";
 import {
+	DocView,
 	EmptyApplicationState,
 	Header,
 	Modal,
@@ -79,6 +80,36 @@ function App() {
 		); // update document index to be the minimum of the current index and the length of the documents array - 1
 	};
 
+	// Update the state when a file is uploaded for a document
+	// Update the document object in the applications array with the uploaded file
+	const handleFileUpload = (appIndex, docIndex, file) => {
+		// Make a shallow copy of the applications array
+		// This is needed because state should be immutable
+		const newApps = [...applications];
+
+		// Update the file property of the document object
+		// in the applications array with the uploaded file
+		newApps[appIndex].documents[docIndex].file = file;
+
+		// Update the state with the new applications array
+		setApplications(newApps);
+	};
+
+	// Remove the file from a document
+	// Set the file property of the document object in the applications array to null
+	const removeFile = (appIndex, docIndex) => {
+		// Make a shallow copy of the applications array
+		// This is needed because state should be immutable
+		const newApps = [...applications];
+
+		// Set the file property of the document object in the applications array to null
+		// This effectively removes the file from the document
+		newApps[appIndex].documents[docIndex].file = null;
+
+		// Update the state with the new applications array
+		setApplications(newApps);
+	};
+
 	// Get the current application and document based on the current indices
 	const currentDoc =
 		applications[currentAppIndex]?.documents[currentDocIndex];
@@ -124,14 +155,21 @@ function App() {
 						{/* Content Area with Side Panel */}
 						<SidePanel
 							isSidePanelOpen={isSidePanelOpen}
-							setIsSidePanelOpen={setIsSidePanelOpen}
-							isDocModalOpen={isDocModalOpen}
 							setIsDocModalOpen={setIsDocModalOpen}
 							applications={applications}
 							currentAppIndex={currentAppIndex}
-							setCurrentAppIndex={setCurrentAppIndex}
-							currentDocIndex={currentDocIndex}
 							setCurrentDocIndex={setCurrentDocIndex}
+							currentDocIndex={currentDocIndex}
+						/>
+						{/* Main Document View */}
+						<DocView
+							currentAppIndex={currentAppIndex}
+							currentDocIndex={currentDocIndex}
+							currentDoc={currentDoc}
+							removeDocument={removeDocument}
+							removeFile={removeFile}
+							handleFileUpload={handleFileUpload}
+							setIsDocModalOpen={setIsDocModalOpen}
 						/>
 					</>
 				)}
