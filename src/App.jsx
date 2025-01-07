@@ -3,7 +3,12 @@ import { useState } from "react";
 // import viteLogo from "/vite.svg";
 import "./App.css";
 import DocumentManager from "./components/DocumentManager";
-import { Header, Modal } from "./components";
+import {
+	EmptyApplicationState,
+	Header,
+	Modal,
+	TabNavigation,
+} from "./components";
 
 function App() {
 	// applications: an array of objects, each representing an application
@@ -97,6 +102,20 @@ function App() {
 					setIsAppModalOpen={setIsAppModalOpen}
 					applications={applications}
 				/>
+				{/* Main content */}
+				{applications.length === 0 ? (
+					<EmptyApplicationState
+						setIsAppModalOpen={setIsAppModalOpen}
+					/>
+				) : (
+					<TabNavigation
+						applications={applications}
+						setCurrentAppIndex={setCurrentAppIndex}
+						setCurrentDocIndex={setCurrentDocIndex}
+						currentAppIndex={currentAppIndex}
+						removeApplication={removeApplication}
+					/>
+				)}
 			</div>
 		</div>
 
