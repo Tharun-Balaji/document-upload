@@ -153,24 +153,28 @@ function App() {
 							removeApplication={removeApplication}
 						/>
 						{/* Content Area with Side Panel */}
-						<SidePanel
-							isSidePanelOpen={isSidePanelOpen}
-							setIsDocModalOpen={setIsDocModalOpen}
-							applications={applications}
-							currentAppIndex={currentAppIndex}
-							setCurrentDocIndex={setCurrentDocIndex}
-							currentDocIndex={currentDocIndex}
-						/>
-						{/* Main Document View */}
-						<DocView
-							currentAppIndex={currentAppIndex}
-							currentDocIndex={currentDocIndex}
-							currentDoc={currentDoc}
-							removeDocument={removeDocument}
-							removeFile={removeFile}
-							handleFileUpload={handleFileUpload}
-							setIsDocModalOpen={setIsDocModalOpen}
-						/>
+						<div className="flex-1 flex overflow-hidden">
+							{/* Side Panel */}
+							<SidePanel
+								isSidePanelOpen={isSidePanelOpen}
+								setIsDocModalOpen={setIsDocModalOpen}
+								applications={applications}
+								currentAppIndex={currentAppIndex}
+								setCurrentDocIndex={setCurrentDocIndex}
+								currentDocIndex={currentDocIndex}
+							/>
+							{/* Main Document View */}
+							<DocView
+								currentAppIndex={currentAppIndex}
+								currentDocIndex={currentDocIndex}
+								currentDoc={currentDoc}
+								removeDocument={removeDocument}
+								removeFile={removeFile}
+								handleFileUpload={handleFileUpload}
+								setIsDocModalOpen={setIsDocModalOpen}
+								applications={applications}
+							/>
+						</div>
 					</>
 				)}
 			</div>
